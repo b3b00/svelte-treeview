@@ -45,8 +45,7 @@
     $:{        
         search = search;
 		
-        if (filter) {
-			console.log(`filtering on ${search}`);
+        if (filter) {			
             currentRoot = filter(root, search);		
 			console.log('************************************');
 			console.log('************************************');

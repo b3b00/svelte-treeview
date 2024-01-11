@@ -35,7 +35,7 @@
 			else if (filtered.length > 0) {
 				return {name:node.name,
 							 id:node.id,
-							 child:filtered 
+							 children:filtered 
 							 };
 			}
 			//console.log(`rejecting ${node.name} #${node.id}`);

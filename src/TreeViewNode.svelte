@@ -90,7 +90,7 @@ details[open] > summary::before {
 </script>
 
 {#if isNode}
-    <details class="treemargin" style="text-align: left">
+    <details open class="treemargin" style="text-align: left">
         <summary >					
 					{#if selectable}
 							<input type="checkbox" bind:value={selected} on:change={handleSelect}/>
