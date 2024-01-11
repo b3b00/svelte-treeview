@@ -24,19 +24,15 @@
 
 	let selectNode = (selectedNode, selected) => {
 			selection[nodeId(selectedNode)] = selected;		
-			console.log('TV.selectNode',selection);	
 	}
 
 	let getNodeSelection = () => selection;
 
-	let isNodeSelected = (node) => {
-		console.log('TV.isNodeSelected()',node);
+	let isNodeSelected = (node) => {		
 		const id = nodeId(node);
 		if (selection.hasOwnProperty(id)) {
-			console.log(`		=> ${selection[id]}`);
 			return selection[id]
-		}
-		console.log(`		=> false`);
+		}		
 		return false;
 	}
 	
@@ -60,6 +56,6 @@
 
 </script>
 
-<!-- TODO : add filter -->
+
 <input type="text" bind:value={search}/>
 <TreeViewNode  {nodeId} {selectable} node={currentRoot} nodeTemplate={nodeTemplate} childAccessor={childrenAccessor}/>

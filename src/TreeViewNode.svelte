@@ -28,7 +28,7 @@ details[open] > summary::before {
 <script>
 
     import {onMount} from "svelte";
-		import {getContext} from 'svelte';
+	import {getContext} from 'svelte';
 
     export let node;
     
@@ -45,9 +45,8 @@ details[open] > summary::before {
     let child;
     let isNode;
 	
-		let getNodeSelection = getContext('getNodeSelection');
-		let selectNode = getContext('selectNode');
-		let isNodeSelected = getContext('isNodeSelected');
+	let selectNode = getContext('selectNode');
+	let isNodeSelected = getContext('isNodeSelected');
     
     onMount(async () => {        		
         child = childAccessor(node);        
@@ -55,32 +54,33 @@ details[open] > summary::before {
 	});  
 	
 	
-		const getAllChildren = (n) => {
-			let children = childAccessor(n);
-			let isnode = children && Array.isArray(children) && children.length > 0; 
-			if (isnode) {				
-				const subs = children.reduce(function(a, b){ return a.concat(b); }, [n]);
-				return subs;
-			}
-			else {
-				return [n];
-			}
-		}
-	
-		const handleSelect = () => {						
-			console.log(`${nodeId(node)} :: ${selected}`)			
-			selectNode(node,selected);			
-			if (isNode) {
-				handleSelectNode();
-			}
-		}
+	const getAllChildren = (n) => {
 
-		const handleSelectNode = () => {
-			const all = getAllChildren(node);
-			for(let i = 0; i < all.length; i++) {
-				selectNode(all[i],selected);
-			}
+		let children = childAccessor(n);
+		let isnode = children && Array.isArray(children) && children.length > 0; 
+		if (isnode) {				
+			const subs = children.map(getAllChildren).reduce(function(a, b){ return a.concat(b); }, [n]);
+			return subs;
 		}
+		else {
+			return [n];
+		}
+	}
+	
+	const handleSelect = () => {						
+		selectNode(node,selected);			
+		if (isNode) {
+			handleSelectNode();
+		}
+		node = node;
+	}
+
+	const handleSelectNode = () => {
+		const all = getAllChildren(node);
+		for(let i = 0; i < all.length; i++) {
+			selectNode(all[i],selected);
+		}
+	}
 
 </script>
 
