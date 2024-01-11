@@ -7,7 +7,6 @@
 	function clickNode(e) {	
 		e.preventDefault(); // avoid deploy/collapse node when clicking node name
 		$selectedNode = data;		
-		console.log(data);
 	}
 
 

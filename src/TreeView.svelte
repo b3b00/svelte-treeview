@@ -23,16 +23,20 @@
 		let selection = {}
 
 	let selectNode = (selectedNode, selected) => {
-			selection[nodeId(selectedNode)] = selected;			
+			selection[nodeId(selectedNode)] = selected;		
+			console.log('TV.selectNode',selection);	
 	}
 
 	let getNodeSelection = () => selection;
 
 	let isNodeSelected = (node) => {
+		console.log('TV.isNodeSelected()',node);
 		const id = nodeId(node);
 		if (selection.hasOwnProperty(id)) {
+			console.log(`		=> ${selection[id]}`);
 			return selection[id]
 		}
+		console.log(`		=> false`);
 		return false;
 	}
 	
@@ -46,12 +50,7 @@
         search = search;
 		
         if (filter) {			
-            currentRoot = filter(root, search);		
-			console.log('************************************');
-			console.log('************************************');
-			console.log(currentRoot);
-			console.log('************************************');
-			console.log('************************************');
+            currentRoot = filter(root, search);					
         }        
     }
 

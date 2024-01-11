@@ -53,5 +53,4 @@
 {#if $selectedNode}
 <h1>#{$selectedNode.id} {$selectedNode.name}</h1>	
 {/if}
-<!-- <TreeView selectable root={root} childrenAccessor={accessor} nodeTemplate={Node} filter={nodefilter} {nodeId}></TreeView> -->
-<TreeView root={root} childrenAccessor={accessor} nodeTemplate={Node} filter={nodefilter} {nodeId}></TreeView>
+<TreeView selectable root={root} childrenAccessor={accessor} nodeTemplate={Node} filter={nodefilter} {nodeId}></TreeView>

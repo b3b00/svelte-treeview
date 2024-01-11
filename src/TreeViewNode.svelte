@@ -51,11 +51,9 @@ details[open] > summary::before {
     
     onMount(async () => {        		
         child = childAccessor(node);        
-        isNode = child && Array.isArray(child) && child.length > 0;        
-		console.log(`TVN : `,node,isNode);
-    })
-
-		
+        isNode = child && Array.isArray(child) && child.length > 0;    
+	});  
+	
 	
 		const getAllChildren = (n) => {
 			let children = childAccessor(n);
@@ -84,16 +82,13 @@ details[open] > summary::before {
 			}
 		}
 
-		
-		
-    
 </script>
 
 {#if isNode}
     <details open class="treemargin" style="text-align: left">
         <summary >					
 					{#if selectable}
-							<input type="checkbox" bind:value={selected} on:change={handleSelect}/>
+							<input type="checkbox" bind:checked={selected} on:change={handleSelect}/>
 					{/if}
             <svelte:component this={nodeTemplate} data={node}/>
         </summary>
