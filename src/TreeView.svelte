@@ -43,10 +43,16 @@
 	setContext('isNodeSelected', isNodeSelected);
     
     $:{        
-				console.log(selection);
         search = search;
+		
         if (filter) {
-            currentRoot = filter(root, search);					
+			console.log(`filtering on ${search}`);
+            currentRoot = filter(root, search);		
+			console.log('************************************');
+			console.log('************************************');
+			console.log(currentRoot);
+			console.log('************************************');
+			console.log('************************************');
         }        
     }
 

@@ -20,13 +20,16 @@
 	let nodeId = (x) => x.id;
 	
 	let nodefilter = (node, search) => {
+		// console.log(`App.filter(${search}) on `,node);
 		if (search === undefined || search === null || search == '') {
 			return node;
 		}
 		var children = accessor(node);
+		// console.log(`CHILDREN ${node.name} #${node.id} :: `,children);
 		if (children.length > 0) {
 			var filtered = children.map(x => nodefilter(x, search)).filter(x => x!= null);
 			if ( node.name.includes(search)) {
+				// console.log(`accepting ${node.name} #${node.id}`);
 				return node;
 			}
 			else if (filtered.length > 0) {
@@ -35,23 +38,20 @@
 							 child:filtered 
 							 };
 			}
+			//console.log(`rejecting ${node.name} #${node.id}`);
 			return null;
 		}
 		else {
 			if (node.name.includes(search)) {
+				//console.log(`accepting ${node.name} #${node.id}`);
 				return node;
 			}
 			return null;
 		}
 	}  
-
-	$: {
-		console.log(selectedNode);
-	}
-	
-	
 </script>
 {#if $selectedNode}
-<h1>clicked : id:&gt;{$selectedNode.id}&lt; - name:&gt;{$selectedNode.name}&lt;</h1>	
+<h1>#{$selectedNode.id} {$selectedNode.name}</h1>	
 {/if}
-<TreeView selectable root={root} childrenAccessor={accessor} nodeTemplate={Node} filter={nodefilter} {nodeId}></TreeView>
+<!-- <TreeView selectable root={root} childrenAccessor={accessor} nodeTemplate={Node} filter={nodefilter} {nodeId}></TreeView> -->
+<TreeView root={root} childrenAccessor={accessor} nodeTemplate={Node} filter={nodefilter} {nodeId}></TreeView>

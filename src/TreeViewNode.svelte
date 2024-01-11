@@ -20,7 +20,7 @@ details[open] > summary::before {
 }
 
 	.leaf::before {
-		content: '🌿'
+		content: '🍃'
 	}
 	
 	
@@ -49,9 +49,10 @@ details[open] > summary::before {
 		let selectNode = getContext('selectNode');
 		let isNodeSelected = getContext('isNodeSelected');
     
-    onMount(async () => {        
+    onMount(async () => {        		
         child = childAccessor(node);        
         isNode = child && Array.isArray(child) && child.length > 0;        
+		console.log(`TVN : `,node,isNode);
     })
 
 		

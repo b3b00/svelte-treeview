@@ -1,21 +1,21 @@
 export const treeData = {
 		id : 0,
-		name : 'root',
+		name : 'Disney',
 		children : [
 			{
 		id : 1,
-		name : '1',
+		name : 'star wars',
 		children : [
 			{
 		id : 2,
-		name : '1.1',
+		name : 'obiwan kenobi',
 		children : [
 			
 		]
 	},
 			{
 		id : 3,
-		name : '1.2',
+		name : 'dark vador',
 		children : [
 			
 		]
@@ -24,18 +24,18 @@ export const treeData = {
 	},
 			{
 		id : 4,
-		name : '2',
+		name : 'marvel',
 		children : [
 			{
 		id : 5,
-		name : '2.1',
+		name : 'hulk',
 		child : [
 			
 		]
 	},
 			{
 		id : 6,
-		name : '2.2',
+		name : 'spiderman',
 		children : [
 			
 		]
