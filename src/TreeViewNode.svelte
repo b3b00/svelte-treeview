@@ -55,7 +55,6 @@ details[open] > summary::before {
 	
 	
 	const getAllChildren = (n) => {
-
 		let children = childAccessor(n);
 		let isnode = children && Array.isArray(children) && children.length > 0; 
 		if (isnode) {				
