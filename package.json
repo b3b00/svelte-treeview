@@ -1,35 +1,35 @@
 {
-  "name": "svelte-tv",
- "version": "0.2.0",
- "description": "Simple tree view component.",
- "homepage": "https://github.com/b3b00/svelte-treeview",
- "bugs": {
-   "url": "https://github.com/b3b00/svelte-treeview/issues"
- },
- "repository": {
-   "type": "git",
-   "url": "git+https://github.com/b3b00/svelte-treeview.git"
- },
- "keywords": [
-   "svelte",
-   "treeview",
-   "component"
- ],
- "type": "module",
+  "name": "@b3b00/svelte-treeview",
+  "version": "0.0.1",
+  "description": "Simple tree view component.",
+  "homepage": "https://github.com/b3b00/svelte-treeview",
+  "bugs": {
+    "url": "https://github.com/b3b00/svelte-treeview/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b3b00/svelte-treeview.git"
+  },
+  "keywords": [
+    "svelte",
+    "treeview",
+    "component"
+  ],
+  "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "svelte": "src/index.js",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w"
-  },  
+  },
   "author": "b3b00",
   "license": "MIT",
   "devDependencies": {
     "rollup": "^2.39.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-svelte": "^7.1.0",
-    "rollup-plugin-css-only": "^4.3.0",
-    "svelte": "^3.32.3"
+    "svelte": "^3.32.3",
+    "rollup-plugin-css-only": "^4.3.0"    
   }
 }
