@@ -6,7 +6,7 @@ export default {
     input: "src/TreeView.svelte",
     output: [
         { file: pkg.module, format: "es" },
-        { file: pkg.main, format: "umd", name: "Name" },
+        { file: pkg.main, format: "umd", name: "Name" }        
     ],
     plugins: [svelte(), resolve(), css()],
 };
