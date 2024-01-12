@@ -13,5 +13,6 @@
 		
 
 </script>
-
+{#if data}
 <span style='cursor:pointer' role="link" tabindex={data.id} on:click={clickNode} on:keydown={clickNode}>#{data.id} {data.name} ({data.children ? data.children.length : 0})</span>
+{/if}

@@ -12,9 +12,11 @@
     
     export let filter = null;
 
-		export let nodeId;
+	export let nodeId;
 
-		export let selectable;
+	export let selectable;
+
+	export let emptyTreeMessage;
     
     let search;
     
@@ -46,7 +48,8 @@
         search = search;
 		
         if (filter) {			
-            currentRoot = filter(root, search);					
+            currentRoot = filter(root, search);
+			console.log(currentRoot);
         }        
     }
 
@@ -56,6 +59,13 @@
 
 </script>
 
-
 <input type="text" bind:value={search}/>
-<TreeViewNode  {nodeId} {selectable} node={currentRoot} nodeTemplate={nodeTemplate} childAccessor={childrenAccessor}/>
+{#if currentRoot}	
+	<TreeViewNode  {nodeId} {selectable} node={currentRoot} nodeTemplate={nodeTemplate} childAccessor={childrenAccessor}/>
+{:else}
+	{#if emptyTreeMessage}
+		<span style="font-style:italic;display:block">{emptyTreeMessage}</span>
+	{:else}
+	<span style="font-style:italic;display:block">empty</span>
+	{/if}
+{/if}

@@ -11,7 +11,7 @@
 	let root = treeData;
 
 	let accessor = (x) => {
-		if (x.children != undefined && x.children != null && Array.isArray(x.children)) {
+		if (x && x.children != undefined && x.children != null && Array.isArray(x.children)) {
             return x.children;
         }
         return [];
@@ -48,4 +48,4 @@
 {#if $selectedNode}
 <h1>#{$selectedNode.id} {$selectedNode.name}</h1>	
 {/if}
-<TreeView selectable root={root} childrenAccessor={accessor} nodeTemplate={Node} filter={nodefilter} {nodeId}></TreeView>
+<TreeView emptyTreeMessage="nothing to show" selectable root={root} childrenAccessor={accessor} nodeTemplate={Node} filter={nodefilter} {nodeId}></TreeView>
