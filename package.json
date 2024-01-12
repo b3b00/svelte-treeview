@@ -1,6 +1,6 @@
 {
-  "name": "@b3b00/svelte-treeview",
-  "version": "0.0.1",
+  "name": "@bolduh/svelte-treeview",
+  "version": "0.0.4",
   "description": "Simple tree view component.",
   "homepage": "https://github.com/b3b00/svelte-treeview",
   "bugs": {
