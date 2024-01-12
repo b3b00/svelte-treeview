@@ -17,6 +17,7 @@
 	export let selectable;
 
 	export let emptyTreeMessage;
+
     
     let search;
     
@@ -61,7 +62,7 @@
 
 <input type="text" bind:value={search}/>
 {#if currentRoot}	
-	<TreeViewNode  {nodeId} {selectable} node={currentRoot} nodeTemplate={nodeTemplate} childAccessor={childrenAccessor}/>
+	<TreeViewNode {nodeId} {selectable} node={currentRoot} nodeTemplate={nodeTemplate} childAccessor={childrenAccessor}/>
 {:else}
 	{#if emptyTreeMessage}
 		<span style="font-style:italic;display:block">{emptyTreeMessage}</span>

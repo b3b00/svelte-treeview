@@ -1,3 +1,33 @@
+<style>
+  
+  :global(.treemargin) {
+        margin-left: 25px;
+    }
+
+  :global(.tv-node) {
+  display: block;
+}
+
+
+:global(.tv-node::before) {
+  margin-left: 1ch;
+  display: inline-block;
+  content: '▶️';
+  transition: 0.2s;
+}
+
+:global(details[open] > .tv-node::before) {  
+  content: '🔽';
+  transition: 0.2s;
+}
+
+:global(.tv-leaf::before) {
+		content: '🍃'
+	}
+  
+</style>
+
+
 <script>
 
 	import TreeView from './TreeView.svelte';

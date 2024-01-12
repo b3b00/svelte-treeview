@@ -1,13 +1,11 @@
-<style>
-    .treemargin {
-        margin-left: 25px;
-    }
-	
-</style>
+
 <script>
 
     import {onMount} from "svelte";
 	import {getContext} from 'svelte';
+
+
+    
 
     export let node;
     
@@ -62,9 +60,18 @@
 
 </script>
 
+<style>
+  
+
+	
+
+	
+	
+</style>
+
 {#if isNode}
     <details open class="treemargin" style="text-align: left">
-        <summary >					
+        <summary class="tv-node">					
 					{#if selectable}
 							<input type="checkbox" bind:checked={selected} on:change={handleSelect}/>
 					{/if}
@@ -77,7 +84,7 @@
 
     </details>
 {:else}
-    <div class="treemargin leaf">
+    <div class="treemargin tv-leaf">
 			{#if selectable}
 							<input type="checkbox" bind:checked={selected} on:change={handleSelect}/>
 					{/if}
