@@ -13,7 +13,7 @@
     
     export let nodeTemplate;
     
-    export let childAccessor;
+    export let childrenAccessor;
 
 		export let nodeId;
 
@@ -28,13 +28,13 @@
 	let isNodeSelected = getContext('isNodeSelected');
     
     onMount(async () => {        		
-        child = childAccessor(node);        
+        child = childrenAccessor(node);        
         isNode = child && Array.isArray(child) && child.length > 0;    
 	});  
 	
 	
 	const getAllChildren = (n) => {
-		let children = childAccessor(n);
+		let children = childrenAccessor(n);
 		let isnode = children && Array.isArray(children) && children.length > 0; 
 		if (isnode) {				
 			const subs = children.map(getAllChildren).reduce(function(a, b){ return a.concat(b); }, [n]);
@@ -71,8 +71,8 @@
             <svelte:component this={nodeTemplate} data={node}/>
         </summary>
 
-        {#each childAccessor(node) as subNode}
-            <svelte:self selected={isNodeSelected(subNode)} {selectable} {nodeId} node={subNode} {nodeTemplate} childAccessor={childAccessor}/>
+        {#each childrenAccessor(node) as subNode}
+            <svelte:self selected={isNodeSelected(subNode)} {selectable} {nodeId} node={subNode} {nodeTemplate} childrenAccessor={childrenAccessor}/>
         {/each}
 
     </details>

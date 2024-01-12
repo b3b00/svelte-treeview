@@ -22,11 +22,30 @@
     
     let currentRoot;
 
-		let selection = {}
+	let selection = {}
+
+	const getAllChildren = (n) => {
+		let children = childrenAccessor(n);
+		let isnode = children && Array.isArray(children) && children.length > 0; 
+		if (isnode) {				
+			const subs = children.map(getAllChildren).reduce(function(a, b){ return a.concat(b); }, [n]);
+			return subs;
+		}
+		else {
+			return [n];
+		}
+	}
 
 	let selectNode = (selectedNode, selected) => {
-			selection[nodeId(selectedNode)] = selected;		
+			let id = nodeId(selectedNode);	
+			selection[id] = selected;		
+			let children = getAllChildren(currentRoot);
+			let notSelectedChildren = children.filter(x => !isNodeSelected(x));
+			if (notSelectedChildren && notSelectedChildren.length > 0) {
+				selection[nodeId(currentRoot)] = false;
+			}
 	}
+	
 
 	let getNodeSelection = () => selection;
 
@@ -61,7 +80,7 @@
 
 <input type="text" bind:value={search}/>
 {#if currentRoot}	
-	<TreeViewNode  {nodeId} {selectable} node={currentRoot} nodeTemplate={nodeTemplate} childAccessor={childrenAccessor}/>
+	<TreeViewNode  {nodeId} {selectable} node={currentRoot} nodeTemplate={nodeTemplate} {childrenAccessor}/>
 {:else}
 	{#if emptyTreeMessage}
 		<span style="font-style:italic;display:block">{emptyTreeMessage}</span>
