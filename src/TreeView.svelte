@@ -28,6 +28,32 @@
 			selection[nodeId(selectedNode)] = selected;		
 	}
 
+	let nodefilter = (node, search) => {
+		if (search === undefined || search === null || search == '') {
+			return node;
+		}
+		var children = childrenAccessor(node);
+		if (children.length > 0) {
+			var filtered = children.map(x => nodefilter(x, search)).filter(x => x!= null);
+			if ( filter(node,search)) {
+				return node;
+			}
+			else if (filtered.length > 0) {
+				return {name:node.name,
+							 id:node.id,
+							 children:filtered 
+							 };
+			}
+			return null;
+		}
+		else {
+			if (filter(node,search)) {
+				return node;
+			}
+			return null;
+		}
+	}  
+
 	let getNodeSelection = () => selection;
 
 	let isNodeSelected = (node) => {		
@@ -48,7 +74,7 @@
         search = search;
 		
         if (filter) {			
-            currentRoot = filter(root, search);
+            currentRoot = nodefilter(root, search);
 			console.log(currentRoot);
         }        
     }
