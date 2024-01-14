@@ -20,9 +20,21 @@
 	let nodeId = (x) => x.id;
 	
 	let filter = (node, search) => node.name.includes(search);
+
+	const onSelectionChanged = (e) => {
+		console.log("new selection ",e.detail);
+	}
 	
 </script>
 {#if $selectedNode}
 <h1>#{$selectedNode.id} {$selectedNode.name}</h1>	
 {/if}
-<TreeView emptyTreeMessage="no super hero to show" selectable {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
+<TreeView 
+emptyTreeMessage="no super hero to show" 
+selectable 
+{root} 
+{childrenAccessor} 
+nodeTemplate={Node} 
+{filter} 
+{nodeId}
+on:selectionChanged={onSelectionChanged}></TreeView>
