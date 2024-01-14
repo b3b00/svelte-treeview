@@ -16,5 +16,5 @@ TreeView attributes (give  that NodeType is the no de type) :
 - root (NodeType): the tree datastructure
 - childrenAccessor ( NodeType => NodeType[] ) : a function that given a node returns the list of children nodes. 
 - nodeTemplate : a svelte component used to render nodes and leafs
-- filter ( ( NodeType, string ) => booléen ): a function used to filter nodes : string -> node
+- filter ( ( NodeType, string ) => booléen ): a function used to filter nodes. if not set no search widget IS displayed 
 - nodeId ( NodeType => any ): a function that given a node returns its id : node -> any
