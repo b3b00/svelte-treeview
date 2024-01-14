@@ -40,7 +40,15 @@
 	}
 
 	let selectNode = (selectedNode, selected) => {
-			selection[nodeId(selectedNode)] = selected;	
+			// set selection
+			selection[nodeId(selectedNode)] = selected;				
+			let children = getAllChildren(selectedNode);
+			if (children && children.length > 0) {
+				for (let i = 0; i < children.length; i++) {
+					selection[nodeId(children[i])] = selected;
+				}
+			}
+			// notify selection changed
 			let allNodes = getAllChildren(currentRoot);
 			let selectedNodes = allNodes.filter(x => isNodeSelected(x));
 			dispatch('selectionChanged',selectedNodes);	
