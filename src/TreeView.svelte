@@ -1,8 +1,13 @@
 <script lang="ts" generics="T">
 
     import {onMount} from "svelte";
-		import {setContext} from 'svelte';
-	    import TreeViewNode from "./TreeViewNode.svelte";
+	import {setContext} from 'svelte';
+	import TreeViewNode from "./TreeViewNode.svelte";	
+	import { createEventDispatcher } from 'svelte';
+
+	
+	const dispatch = createEventDispatcher<{ "selectionChanged": T[] }>();
+  
 
     export let root = {};
     
@@ -29,7 +34,10 @@
 		let selection = {}
 
 	let selectNode = (selectedNode, selected) => {
-			selection[nodeId(selectedNode)] = selected;		
+		selection[nodeId(selectedNode)] = selected;	
+		let allNodes = getAllChildren(currentRoot);
+		let selectedNodes = allNodes.filter(x => isNodeSelected(x));
+		dispatch('selectionChanged',selectedNodes);	
 	}
 
 	let nodefilter = (node, search) => {
@@ -86,6 +94,18 @@
     onMount(async () => {
         currentRoot = root;
     })
+
+	const getAllChildren = (n:T):T[] => {
+		let children = childrenAccessor(n);
+		let isnode = children && Array.isArray(children) && children.length > 0; 
+		if (isnode) {				
+			const subs = children.map(getAllChildren).reduce(function(a, b){ return a.concat(b); }, [n]);
+			return subs;
+		}
+		else {
+			return [n];
+		}
+	}
 
 </script>
 

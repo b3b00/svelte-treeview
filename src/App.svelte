@@ -20,6 +20,12 @@
 	let nodeId = (x:Disney) => x.id;
 	
 	let filter = (node:Disney, search:string) => node.name.includes(search);
+
+	let selectedNodes : Disney[] = [];
+
+	const onSelectionChanged = (e) => {		
+		selectedNodes = e.detail;
+	}
 	
 </script>
 
@@ -28,12 +34,30 @@
 <b>#{$selectedNode.id} {$selectedNode.name}</b>	
 {/if}
 
-
-<TreeView emptyTreeMessage="no super hero to show" selectable {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
+<div style="display:flex;flex-direction:row">
+	<div>
+	<TreeView emptyTreeMessage="no super hero to show" on:selectionChanged={onSelectionChanged} selectable {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
+	</div>
+	<div>
+		{#if selectedNodes && selectedNodes.length > 0}
+			<ul>
+				{#each selectedNodes as node}
+					<li>{node.id} - {node.name}</li>
+				{/each}
+			</ul>
+		{:else}
+			<i>no selected node</i>
+		{/if}
+	</div>
+</div>
 
 <h2>not selectable, nor clickable</h2>
 
+
 <TreeView emptyTreeMessage="Mikey Mouse" {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
+
+
+
 
 <h2>not selectable, nor clickable but stylish</h2>
 
