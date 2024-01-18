@@ -1,4 +1,10 @@
-export const treeData = {
+export interface Disney {
+	id:number,
+	name:string,
+	children:Disney[]
+}
+
+export const treeData:Disney = {
 		id : 0,
 		name : 'Disney',
 		children : [

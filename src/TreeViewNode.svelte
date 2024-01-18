@@ -4,7 +4,7 @@
     }
 	
 </style>
-<script lang="ts">
+<script lang="ts" generics="T">
 
     import {onMount} from "svelte";
 	import {getContext} from 'svelte';
@@ -14,7 +14,7 @@
     
     export let nodeTemplate;
     
-    export let childAccessor:<T>(n:T) => T[];
+    export let childAccessor:(n:T) => T[];
 
 		export let nodeId;
 
@@ -34,7 +34,7 @@
 	});  
 	
 	
-	const getAllChildren = <T>(n:T): T[] => {
+	const getAllChildren = (n:T): T[] => {
 		let children = childAccessor(n);
 		let isnode = children && Array.isArray(children) && children.length > 0; 
 		if (isnode) {				

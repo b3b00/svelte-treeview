@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" generics="T">
 
     import {onMount} from "svelte";
 		import {setContext} from 'svelte';
@@ -8,13 +8,13 @@
     
     export let nodeTemplate;
 
-    export let childrenAccessor:<T>(n:T) => T[];
+    export let childrenAccessor:(n:T) => T[];
     
-    export let filter : <T>(n:T, pattern:string)=> T;
+    export let filter : (n:T, pattern:string)=> boolean;
 
-	export let nodeId:<T>(n:T) => any;
+	export let nodeId:(n:T) => any;
 
-	export let selectable : boolean;
+	export let selectable : boolean = false;
 
 	export let emptyTreeMessage : string;
     
