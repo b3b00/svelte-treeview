@@ -1,5 +1,10 @@
 
 
+**demo**
+
+[svelte-treeview](https://sveltetreeview.pages.dev/)
+
+
 **installation**
 
 `npm i @bolduh/svelte-treeview`
