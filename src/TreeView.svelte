@@ -18,8 +18,12 @@
 
 	export let emptyTreeMessage : string;
     
+	export let ref: string = "$xirglub!";
+
     let search : string;
     
+
+
     let currentRoot;
 
 		let selection = {}
@@ -87,7 +91,7 @@
 
 <input type="text" bind:value={search}/>
 {#if currentRoot}	
-	<TreeViewNode  {nodeId} {selectable} node={currentRoot} nodeTemplate={nodeTemplate} childAccessor={childrenAccessor}/>
+	<TreeViewNode {ref} {nodeId} {selectable} node={currentRoot} nodeTemplate={nodeTemplate} childAccessor={childrenAccessor}/>
 {:else}
 	{#if emptyTreeMessage}
 		<span style="font-style:italic;display:block">{emptyTreeMessage}</span>

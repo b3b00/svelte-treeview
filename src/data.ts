@@ -35,7 +35,7 @@ export const treeData:Disney = {
 			{
 		id : 5,
 		name : 'hulk',
-		child : [
+		children : [
 			
 		]
 	},
