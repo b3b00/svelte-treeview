@@ -4,7 +4,14 @@
 	import Node from './Node.svelte';
 		import {selectedNode} from './teststore.js'
 	import {treeData, Disney} from './data.js';
+  import { ComponentEvents } from 'svelte';
 	
+
+	class CustomEvent<T> {
+		detail:T;
+		type:string;
+	}
+
 	let name = 'world';
 	$selectedNode = undefined
 
@@ -23,7 +30,8 @@
 
 	let selectedNodes : Disney[] = [];
 
-	const onSelectionChanged = (e) => {		
+	const onSelectionChanged = (e:CustomEvent<Disney[]>) => {		
+		console.log(e);
 		selectedNodes = e.detail;
 	}
 	
