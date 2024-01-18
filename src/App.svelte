@@ -22,10 +22,42 @@
 	let filter = (node:Disney, search:string) => node.name.includes(search);
 	
 </script>
+
+<h2>selectable and clickable tree view</h2>
 {#if $selectedNode}
-<h1>#{$selectedNode.id} {$selectedNode.name}</h1>	
+<b>#{$selectedNode.id} {$selectedNode.name}</b>	
 {/if}
+
+
 <TreeView emptyTreeMessage="no super hero to show" selectable {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
 
+<h2>not selectable, nor clickable</h2>
 
-<TreeView emptyTreeMessage="Mikey Mouse"  {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
+<TreeView emptyTreeMessage="Mikey Mouse" {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
+
+<h2>not selectable, nor clickable but stylish</h2>
+
+
+
+	<style>
+
+
+:global(.tv-node[ref="withStyle"]::before) {
+  margin-left: 1ch;
+  display: inline-block;
+  content: '▶️';
+  transition: 0.2s;
+}
+:global(details[ref="withStyle"][open] > .tv-node::before) {  
+  content: '🔽';
+  transition: 0.2s;
+}
+:global(.tv-leaf[ref="withStyle"]::before) {
+		content: '🍃'
+	}
+  
+  
+</style>
+
+
+<TreeView emptyTreeMessage="Mikey Mouse" ref="withStyle" {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>

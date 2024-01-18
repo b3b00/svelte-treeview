@@ -11,6 +11,8 @@
   import TreeView from "./TreeView.svelte";
 
     export let node;
+
+	export let ref;
     
     export let nodeTemplate;
     
@@ -64,8 +66,8 @@
 </script>
 
 {#if isNode}
-    <details open class="treemargin" style="text-align: left">
-        <summary >					
+    <details ref={ref} open class="treemargin" style="text-align: left">
+        <summary class="tv-node" ref={ref}>					
 					{#if selectable}
 							<input type="checkbox" bind:checked={selected} on:change={handleSelect}/>
 					{/if}
@@ -73,12 +75,12 @@
         </summary>
 
         {#each childAccessor(node) as subNode}
-            <svelte:self selected={isNodeSelected(subNode)} {selectable} {nodeId} node={subNode} {nodeTemplate} childAccessor={childAccessor}/>
+            <svelte:self {ref} selected={isNodeSelected(subNode)} {selectable} {nodeId} node={subNode} {nodeTemplate} childAccessor={childAccessor}/>
         {/each}
 
     </details>
 {:else}
-    <div class="treemargin leaf">
+    <div class="treemargin tv-leaf" ref={ref}>
 			{#if selectable}
 							<input type="checkbox" bind:checked={selected} on:change={handleSelect}/>
 					{/if}
