@@ -22,6 +22,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c rollup.debug.js -w",
+    "build:demo": "rollup -c rollup.demo.js",
     "start": "sirv public --no-clear"
   },
   "author": "b3b00",
@@ -29,14 +30,17 @@
   "devDependencies": {
     "rollup": "^2.39.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-svelte": "^7.1.0",
+    "rollup-plugin-svelte": "^7.1.6",
+    "@rollup/plugin-typescript": "^11.1.6",
     "svelte": "^3.32.3",
     "rollup-plugin-css-only": "^4.3.0",
     "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-terser": "^0.4.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "rollup-plugin-livereload": "^2.0.0",
-    "rollup-plugin-css-only": "^4.3.0" 
+    "svelte-preprocess": "^5.1.3",
+    "sync-request": "6.0.0",
+    "tslib": "^2.6.2" 
   },
   "dependencies": {
     "sirv-cli": "^2.0.0"

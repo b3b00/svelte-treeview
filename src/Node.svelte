@@ -1,6 +1,6 @@
 
 
-<script>
+<script lang="ts">
 	import {selectedNode} from './teststore.js'
     export let data;
 	

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 
 	import TreeView from './TreeView.svelte';
 	import Node from './Node.svelte';

@@ -4,16 +4,17 @@
     }
 	
 </style>
-<script>
+<script lang="ts">
 
     import {onMount} from "svelte";
 	import {getContext} from 'svelte';
+  import TreeView from "./TreeView.svelte";
 
     export let node;
     
     export let nodeTemplate;
     
-    export let childAccessor;
+    export let childAccessor:<T>(n:T) => T[];
 
 		export let nodeId;
 
@@ -24,8 +25,8 @@
     let child;
     let isNode;
 	
-	let selectNode = getContext('selectNode');
-	let isNodeSelected = getContext('isNodeSelected');
+	let selectNode = getContext<(n:any, selected:boolean) => void>('selectNode');
+	let isNodeSelected = getContext<(n:any) => boolean>('isNodeSelected');
     
     onMount(async () => {        		
         child = childAccessor(node);        
@@ -33,7 +34,7 @@
 	});  
 	
 	
-	const getAllChildren = (n) => {
+	const getAllChildren = <T>(n:T): T[] => {
 		let children = childAccessor(n);
 		let isnode = children && Array.isArray(children) && children.length > 0; 
 		if (isnode) {				
