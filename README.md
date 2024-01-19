@@ -45,6 +45,9 @@ The TreeView could raise a `selectionChanged` event whenever a node is selected 
 
 ```html
 
+Use the following CSS template in your svelte app to customize tree icons (using emojis). 
+
+
 <style>
 
 // hide the default triangle   
