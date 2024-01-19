@@ -17,7 +17,7 @@
 
 	export let searchTemplate = undefined;
     
-    export let filter : (n:T & TVNode, pattern:string)=> boolean;
+    export let filter : (n:T & TVNode, pattern:string)=> boolean = undefined;
 
 	export let selectable : boolean = false;
 
@@ -115,7 +115,7 @@
     
     $:{        
         search = search;
-        if (filter && search) {		
+        if (filter && !complexFilter) {		
             currentRoot = nodefilter(root, search);						
         }        
     }

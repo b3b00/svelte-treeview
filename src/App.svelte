@@ -19,7 +19,7 @@
 	
 	
 	let filter = (node:Disney, search:string) :boolean => {
-		const contains = node.name.includes(search);
+		const contains = node.name.toLocaleLowerCase().includes(search.toLocaleLowerCase());
 		return contains;
 	};
 
@@ -40,6 +40,9 @@
 			if (node.universe != pattern.universe && pattern.universe != Universe.All)	{
 				return false;
 			}			
+		}
+		if (pattern.name !== undefined && pattern.name !== null && pattern.name.length > 0) {
+			return node.name.toLocaleLowerCase().includes(pattern.name);
 		}
 		return true;
 	}
@@ -82,7 +85,7 @@
 
 
 
-<TreeView emptyTreeMessage="Mikey Mouse"  {root} nodeTemplate={Node} {filter}  searchTemplate={Filter} complexFilter={characterFilter}></TreeView>
+<TreeView emptyTreeMessage="Mikey Mouse"  {root} nodeTemplate={Node} searchTemplate={Filter} complexFilter={characterFilter}></TreeView>
 
 
 <h2>Styling</h2>
@@ -99,15 +102,15 @@
 :global(.tv-node[ref="withStyle"]::before) {
   margin-left: 1ch;
   display: inline-block;
-  content: '▶️';
+  content: '➕';
   transition: 0.2s;
 }
 :global(details[ref="withStyle"][open] > .tv-node::before) {  
-  content: '🔽';
+  content: '➖';
   transition: 0.2s;
 }
 :global(.tv-leaf[ref="withStyle"]::before) {
-		content: '🍃'
+		content: '🦸🏻‍♂️'
 	}
   
   

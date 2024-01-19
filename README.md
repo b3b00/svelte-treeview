@@ -46,22 +46,29 @@ The TreeView could raise a `selectionChanged` event whenever a node is selected 
 ```html
 
 <style>
+
+// hide the default triangle   
 :global(summary[ref="withStyle"]) {
   display: block;
 }
 
+// set ➕ as the closed node icon
 :global(.tv-node[ref="withStyle"]::before) {
   margin-left: 1ch;
   display: inline-block;
-  content: '▶️';
+  content: '➕';
   transition: 0.2s;
 }
+
+// set ➖ as the opened node icon
 :global(details[ref="withStyle"][open] > .tv-node::before) {  
-  content: '🔽';
+  content: '➖';
   transition: 0.2s;
 }
+
+// set 🦸🏻‍♂️ as the leaf icon
 :global(.tv-leaf[ref="withStyle"]::before) {
-		content: '🍃'
+		content: '🦸🏻‍♂️'
 	}
 </style>
 

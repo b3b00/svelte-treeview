@@ -24,6 +24,12 @@
         dispatch('filterChanged',{name,kind,universe});	
     }
 
+    function reset() {
+        name = "";
+        kind = CharacterKind.All;
+        universe = Universe.All;
+    }
+
     $:{
         dispatch('filterChanged',{name,kind,universe});
     }
@@ -52,4 +58,5 @@
             <option value={Universe.Marvel} >{Universe.Marvel} </option>
         </select> 
     </div>
+    <div><button on:click={reset}>Reset</button></div>
 </div>
