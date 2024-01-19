@@ -1,73 +1,110 @@
 
 import { TVNode } from "./TreeViewTypes";
 
+
+export enum CharacterKind {
+  Hero = "Hero",
+  Villain = "Villain",
+  All = "All"
+}
+
+export enum Universe {
+  StarWars = "StarWars",
+  Marvel = "Marvel",
+  All="All"
+}
+
 export class Disney implements TVNode {
   id: number;
   name: string;
   children: Disney[];
-  vilain?: boolean | undefined = undefined;
+  kind: CharacterKind | undefined = undefined;  
+  universe: Universe;
 }
 
-export interface VillainFilter {
+
+
+export interface CharacterFilter {
   name: string;
-  villain: boolean;
+  kind: CharacterKind;
+  universe: Universe;
 }
 
 export const treeData: Disney = {
   id: 0,
   name: "Disney",
+  universe: Universe.All,
+  kind: CharacterKind.All,
   children: [
     {
       id: 1,
       name: "star wars",
+      universe: Universe.StarWars,
+      kind:CharacterKind.All,
       children: [
         {
           id: 2,
-          name: "obiwan kenobi",
+          name: "Obiwan Kenobi",
           children: [],
-          vilain: false,
+          kind: CharacterKind.Hero,
+          universe: Universe.StarWars
+        },
+        {
+          id: 22,
+          name: "Luke Skywalker",
+          children: [],
+          kind: CharacterKind.Hero,
+          universe: Universe.StarWars
         },
         {
           id: 3,
-          name: "dark vador",
+          name: "Dark Vador",
           children: [],
-          vilain: true,
+          kind: CharacterKind.Villain,
+          universe: Universe.StarWars
         },
         {
           id: 666,
-          name: "palpatine",
+          name: "Palpatine",
           children: [],
-          vilain: true,
+          kind: CharacterKind.Villain,
+          universe: Universe.StarWars
         },
       ],
     },
     {
       id: 4,
-      name: "marvel",
+      name: "Marvel",
+      universe: Universe.Marvel,  
+      kind: CharacterKind.All,    
       children: [
         {
           id: 5,
-          name: "hulk",
+          name: "Hulk",
           children: [],
-          vilain: false,
+          kind: CharacterKind.Hero,
+          universe: Universe.Marvel
         },
         {
           id: 6,
-          name: "spiderman",
+          name: "Spiderman",
           children: [],
-          vilain: false,
+          kind: CharacterKind.Hero,
+          universe: Universe.Marvel
         },
         {
           id: 7,
-          name: "venom",
+          name: "Venom",
           children: [],
-          vilain: true,
+          kind: CharacterKind.Villain,
+          universe: Universe.Marvel
         },
         {
           id: 777,
           name: "Thanos",
           children: [],
-          vilain: true,
+          kind: CharacterKind.Villain,
+          universe: Universe.Marvel
         },
       ],
     },

@@ -4,7 +4,7 @@
 	import Filter from './Filter.svelte';
 	import Node from './Node.svelte';
 		import {selectedNode} from './teststore.js'
-	import {treeData, Disney, VillainFilter} from './data.js';
+	import {treeData, Disney, CharacterFilter, CharacterKind, Universe} from './data.js';
 	import {TVNode, CustomEvent} from './TreeViewTypes';
 	
 
@@ -34,21 +34,29 @@
 		selectedNodes = e.detail;
 	}
 
-	const villainFilter = (node:Disney, pattern:VillainFilter) : boolean => {
-		if (pattern.villain !== undefined) {
-			if (node.vilain != pattern.villain) {
+	const characterFilter = (node:Disney, pattern:CharacterFilter) : boolean => {
+
+		if (pattern.kind !== undefined) {
+			if (node.kind != pattern.kind && pattern.kind != CharacterKind.All) {
 				return false;
 			}
 		}
-		if (pattern.name !== undefined && pattern.name !== null && pattern.name.length > 0) {
-			return node.name.includes(pattern.name);
+		if (pattern.universe !== undefined) {
+			if (node.universe != pattern.universe && pattern.universe != Universe.All)	{
+				return false;
+			}			
 		}
 		return true;
 	}
 	
 </script>
 
-<h2>selectable and clickable tree view</h2>
+<h2>simple filter</h2>
+
+
+<TreeView emptyTreeMessage="Mikey Mouse" {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
+
+<h2>Select nodes</h2>
 {#if $selectedNode}
 <b>#{$selectedNode.id} {$selectedNode.name}</b>	
 {/if}
@@ -70,15 +78,19 @@
 	</div>
 </div>
 
-<h2>not selectable, nor clickable</h2>
-
-
-<TreeView emptyTreeMessage="Mikey Mouse" {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
 
 
 
 
-<h2>not selectable, nor clickable but stylish</h2>
+
+<h2>Custom filter</h2>
+
+
+
+<TreeView emptyTreeMessage="Mikey Mouse"  {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId} searchTemplate={Filter} complexFilter={characterFilter}></TreeView>
+
+
+<h2>Styling</h2>
 
 
 
@@ -102,6 +114,5 @@
   
 </style>
 
-<TreeView emptyTreeMessage="Mikey Mouse"  {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId} searchTemplate={Filter} complexFilter={villainFilter}></TreeView>
 
-
+<TreeView emptyTreeMessage="Mikey Mouse" ref="withStyle" {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
