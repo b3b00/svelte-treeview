@@ -18,7 +18,10 @@
 	let root = treeData;
 	
 	
-	let filter = (node:Disney, search:string) => node.name.includes(search);
+	let filter = (node:Disney, search:string) :boolean => {
+		const contains = node.name.includes(search);
+		return contains;
+	};
 
 	let selectedNodes : Disney[] = [];
 
@@ -46,7 +49,7 @@
 <h2>simple filter</h2>
 
 
-<TreeView emptyTreeMessage="Mikey Mouse" {root}  nodeTemplate={Node} {filter} ></TreeView>
+<TreeView emptyTreeMessage="Mickey Mouse" {root}  nodeTemplate={Node} {filter} ></TreeView>
 
 <h2>Select nodes</h2>
 {#if $selectedNode}

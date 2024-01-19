@@ -12,7 +12,7 @@
 ## usage
 
 ```js
-<TreeView emptyTreeMessage="nothing to show" selectable root={root} childrenAccessor={accessor} nodeTemplate={Node} filter={nodefilter} {nodeId}></TreeView>
+<TreeView emptyTreeMessage="nothing to show" selectable root={root} childrenAccessor={accessor} nodeTemplate={Node} filter={nodefilter} ></TreeView>
 ```
 
 The treeview display a tree data structure that must inherit from TVNode

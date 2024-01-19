@@ -46,9 +46,9 @@
 		if (search === undefined || search === null || search == '') {
 			return node;
 		}
-		var children = node.id
+		var children = node.children;
 		if (children.length > 0) {
-			var filtered = children.map(x => nodefilter(x, search)).filter(x => x!= null);
+			var filtered = children.map(x => nodefilter(x as T, search)).filter(x => x!= null);
 			if ( filter(node,search)) {
 				return node;
 			}
@@ -115,8 +115,7 @@
     
     $:{        
         search = search;
-		
-        if (filter && search) {			
+        if (filter && search) {		
             currentRoot = nodefilter(root, search);						
         }        
     }

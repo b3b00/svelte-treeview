@@ -16,9 +16,6 @@
 	export let ref;
     
     export let nodeTemplate;
-    
-
-	export let nodeId;
 
 	export let selectable;
 
@@ -75,7 +72,7 @@
         </summary>
 
         {#each node.children as subNode}
-            <svelte:self {ref} selected={isNodeSelected(subNode)} {selectable} {nodeId} node={subNode} {nodeTemplate}/>
+            <svelte:self {ref} selected={isNodeSelected(subNode)} {selectable} node={subNode} {nodeTemplate}/>
         {/each}
 
     </details>
