@@ -2,7 +2,9 @@
 
 <script lang="ts">
 	import {selectedNode} from './teststore.js'
-    export let data;
+	import {Disney} from './data.js';
+	
+    export let data: Disney;
 	
 	function clickNode(e) {	
 		e.preventDefault(); // avoid deploy/collapse node when clicking node name
