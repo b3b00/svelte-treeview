@@ -43,4 +43,32 @@ The TreeView could raise a `selectionChanged` event whenever a node is selected 
 
 ## styling a TreeView
 
-_to come_
+```html
+
+<style>
+:global(summary[ref="withStyle"]) {
+  display: block;
+}
+
+:global(.tv-node[ref="withStyle"]::before) {
+  margin-left: 1ch;
+  display: inline-block;
+  content: '▶️';
+  transition: 0.2s;
+}
+:global(details[ref="withStyle"][open] > .tv-node::before) {  
+  content: '🔽';
+  transition: 0.2s;
+}
+:global(.tv-leaf[ref="withStyle"]::before) {
+		content: '🍃'
+	}
+</style>
+
+<TreeView 
+  emptyTreeMessage="Mikey Mouse" 
+  ref="withStyle" 
+  {root} {childrenAccessor} 
+  nodeTemplate={Node} 
+  {filter}></TreeView>
+```

@@ -16,12 +16,8 @@
     export let nodeTemplate;
 
 	export let searchTemplate = undefined;
-
-    export let childrenAccessor:(n:T) => T[];
     
     export let filter : (n:T & TVNode, pattern:string)=> boolean;
-
-	export let nodeId:(n:T & TVNode) => any;
 
 	export let selectable : boolean = false;
 
@@ -39,28 +35,27 @@
 
 		let selection = {}
 
-	let selectNode = (selectedNode, selected) => {
-		selection[nodeId(selectedNode)] = selected;	
+	let selectNode = (selectedNode:T, selected) => {
+		selection[selectedNode.id] = selected;	
 		let allNodes = getAllChildren(currentRoot);
 		let selectedNodes = allNodes.filter(x => isNodeSelected(x));		
 		dispatch('selectionChanged',selectedNodes);	
 	}
 
-	let nodefilter = (node, search) => {
+	let nodefilter = (node:T, search:string) => {
 		if (search === undefined || search === null || search == '') {
 			return node;
 		}
-		var children = childrenAccessor(node);
+		var children = node.id
 		if (children.length > 0) {
 			var filtered = children.map(x => nodefilter(x, search)).filter(x => x!= null);
 			if ( filter(node,search)) {
 				return node;
 			}
 			else if (filtered.length > 0) {
-				return {name:node.name,
-							 id:node.id,
-							 children:filtered 
-							 };
+				let newNode = Object.assign({}, node);
+				newNode.children = filtered;				
+				return newNode;
 			}
 			return null;
 		}
@@ -83,8 +78,7 @@
 			if ( complexFilter(node,searchPattern)) {				
 				return node;
 			}
-			else if (filtered.length > 0) {
-				
+			else if (filtered.length > 0) {				
 				let newNode = Object.assign({}, node);
 				newNode.children = filtered;				
 				return newNode;
@@ -105,8 +99,8 @@
 
 	let getNodeSelection = () => selection;
 
-	let isNodeSelected = (node) => {		
-		const id = nodeId(node);
+	let isNodeSelected = (node:T) => {		
+		const id = node.id;
 		if (selection.hasOwnProperty(id)) {
 			return selection[id]
 		}		
@@ -132,7 +126,7 @@
     })
 
 	const getAllChildren = (n:T):T[] => {
-		let children = childrenAccessor(n);
+		let children = n.children;
 		let isnode = children && Array.isArray(children) && children.length > 0; 
 		if (isnode) {				
 			const subs = children.map(getAllChildren).reduce(function(a, b){ return a.concat(b); }, [n]);
@@ -153,7 +147,7 @@
 {/if}
 
 {#if currentRoot}	
-	<TreeViewNode {ref} {nodeId} {selectable} node={currentRoot} nodeTemplate={nodeTemplate} childAccessor={childrenAccessor}/>
+	<TreeViewNode {ref} {selectable} node={currentRoot} nodeTemplate={nodeTemplate} />
 {:else}
 	{#if emptyTreeMessage}
 		<span style="font-style:italic;display:block">{emptyTreeMessage}</span>

@@ -16,15 +16,7 @@
 	$selectedNode = undefined
 
 	let root = treeData;
-
-	let childrenAccessor = (x:Disney) => {
-		if (x && x.children != undefined && x.children != null && Array.isArray(x.children)) {
-            return x.children;
-        }
-        return [];
-	}
 	
-	let nodeId = (x:Disney) => x.id;
 	
 	let filter = (node:Disney, search:string) => node.name.includes(search);
 
@@ -54,7 +46,7 @@
 <h2>simple filter</h2>
 
 
-<TreeView emptyTreeMessage="Mikey Mouse" {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
+<TreeView emptyTreeMessage="Mikey Mouse" {root}  nodeTemplate={Node} {filter} ></TreeView>
 
 <h2>Select nodes</h2>
 {#if $selectedNode}
@@ -63,7 +55,7 @@
 
 <div style="display:flex;flex-direction:row">
 	<div>
-	<TreeView emptyTreeMessage="no super hero to show" on:selectionChanged={onSelectionChanged} selectable {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
+	<TreeView emptyTreeMessage="no super hero to show" on:selectionChanged={onSelectionChanged} selectable {root} nodeTemplate={Node} {filter} ></TreeView>
 	</div>
 	<div>
 		{#if selectedNodes && selectedNodes.length > 0}
@@ -87,7 +79,7 @@
 
 
 
-<TreeView emptyTreeMessage="Mikey Mouse"  {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId} searchTemplate={Filter} complexFilter={characterFilter}></TreeView>
+<TreeView emptyTreeMessage="Mikey Mouse"  {root} nodeTemplate={Node} {filter}  searchTemplate={Filter} complexFilter={characterFilter}></TreeView>
 
 
 <h2>Styling</h2>
@@ -96,6 +88,10 @@
 
 	<style>
 
+
+:global(summary[ref="withStyle"]) {
+  display: block;
+}
 
 :global(.tv-node[ref="withStyle"]::before) {
   margin-left: 1ch;
@@ -115,4 +111,4 @@
 </style>
 
 
-<TreeView emptyTreeMessage="Mikey Mouse" ref="withStyle" {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
+<TreeView emptyTreeMessage="Mikey Mouse" ref="withStyle" {root} nodeTemplate={Node} {filter} ></TreeView>

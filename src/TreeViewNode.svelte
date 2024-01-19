@@ -4,10 +4,11 @@
     }
 	
 </style>
-<script lang="ts" generics="T">
+<script lang="ts" generics="T extends TVNode">
 
     import {onMount} from "svelte";
 	import {getContext} from 'svelte';
+	import {TVNode} from './TreeViewTypes';
   import TreeView from "./TreeView.svelte";
 
     export let node;
@@ -16,13 +17,12 @@
     
     export let nodeTemplate;
     
-    export let childAccessor:(n:T) => T[];
 
-		export let nodeId;
+	export let nodeId;
 
-		export let selectable;
+	export let selectable;
 
-		export let selected = false;
+	export let selected = false;
 	
     let child;
     let isNode;
@@ -31,13 +31,13 @@
 	let isNodeSelected = getContext<(n:any) => boolean>('isNodeSelected');
     
     onMount(async () => {        		
-        child = childAccessor(node);        
+        child = node.children;        
         isNode = child && Array.isArray(child) && child.length > 0;    
 	});  
 	
 	
 	const getAllChildren = (n:T): T[] => {
-		let children = childAccessor(n);
+		let children = n.children;
 		let isnode = children && Array.isArray(children) && children.length > 0; 
 		if (isnode) {				
 			const subs = children.map(getAllChildren).reduce(function(a, b){ return a.concat(b); }, [n]);
@@ -74,8 +74,8 @@
             <svelte:component this={nodeTemplate} data={node}/>
         </summary>
 
-        {#each childAccessor(node) as subNode}
-            <svelte:self {ref} selected={isNodeSelected(subNode)} {selectable} {nodeId} node={subNode} {nodeTemplate} childAccessor={childAccessor}/>
+        {#each node.children as subNode}
+            <svelte:self {ref} selected={isNodeSelected(subNode)} {selectable} {nodeId} node={subNode} {nodeTemplate}/>
         {/each}
 
     </details>
