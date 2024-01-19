@@ -1,23 +1,27 @@
-<script lang="ts" generics="T">
+<script lang="ts" generics="T extends TVNode,S = string">
 
     import {onMount} from "svelte";
 	import {setContext} from 'svelte';
 	import TreeViewNode from "./TreeViewNode.svelte";	
 	import { createEventDispatcher } from 'svelte';
+	import {CustomEvent, TVNode} from './TreeViewTypes';
 
-	
+
+
 	const dispatch = createEventDispatcher<{ "selectionChanged": T[] }>();
   
 
-    export let root = {};
+    export let root:T & TVNode = undefined;
     
     export let nodeTemplate;
 
+	export let searchTemplate = undefined;
+
     export let childrenAccessor:(n:T) => T[];
     
-    export let filter : (n:T, pattern:string)=> boolean;
+    export let filter : (n:T & TVNode, pattern:string)=> boolean;
 
-	export let nodeId:(n:T) => any;
+	export let nodeId:(n:T & TVNode) => any;
 
 	export let selectable : boolean = false;
 
@@ -26,8 +30,10 @@
 	export let ref: string = "$xirglub!";
 
     let search : string;
-    
 
+    let complexSearch: S; 
+
+	export let complexFilter: (n:T, searchPattern:S) => boolean = undefined;
 
     let currentRoot;
 
@@ -36,7 +42,7 @@
 	let selectNode = (selectedNode, selected) => {
 		selection[nodeId(selectedNode)] = selected;	
 		let allNodes = getAllChildren(currentRoot);
-		let selectedNodes = allNodes.filter(x => isNodeSelected(x));
+		let selectedNodes = allNodes.filter(x => isNodeSelected(x));		
 		dispatch('selectionChanged',selectedNodes);	
 	}
 
@@ -66,6 +72,37 @@
 		}
 	}  
 
+	let complexNodefilter = (node:T , searchPattern:S) => {		
+		if (searchPattern === undefined || searchPattern === null || searchPattern == '') {				
+			return node;
+		}
+		var children = node.children;
+		if (children.length > 0) {
+
+			var filtered = children.map(x => complexNodefilter(x as T, searchPattern)).filter(x => x!= null);
+			if ( complexFilter(node,searchPattern)) {				
+				return node;
+			}
+			else if (filtered.length > 0) {
+				
+				let newNode = Object.assign({}, node);
+				newNode.children = filtered;				
+				return newNode;
+			}
+			return null;
+		}
+		else {
+			if (complexFilter(node,searchPattern)) {				
+				return node;
+			}
+			return null;
+		}
+	}  
+
+	let onComplexFilterChanged = (e:CustomEvent<S>) => {
+		currentRoot = complexNodefilter(root,e.detail);
+	}
+
 	let getNodeSelection = () => selection;
 
 	let isNodeSelected = (node) => {		
@@ -85,9 +122,8 @@
     $:{        
         search = search;
 		
-        if (filter) {			
-            currentRoot = nodefilter(root, search);
-			console.log(currentRoot);
+        if (filter && search) {			
+            currentRoot = nodefilter(root, search);						
         }        
     }
 
@@ -109,7 +145,13 @@
 
 </script>
 
-<input type="text" bind:value={search}/>
+{#if filter && !complexFilter}
+	<input type="text" bind:value={search}/>
+{/if}
+{#if complexFilter}
+	<svelte:component this={searchTemplate} on:filterChanged={onComplexFilterChanged}/>
+{/if}
+
 {#if currentRoot}	
 	<TreeViewNode {ref} {nodeId} {selectable} node={currentRoot} nodeTemplate={nodeTemplate} childAccessor={childrenAccessor}/>
 {:else}

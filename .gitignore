@@ -3,3 +3,4 @@
 dist/
 src/assets
 .DS_Store
+public/bundle.*

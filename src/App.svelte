@@ -1,16 +1,16 @@
 <script lang="ts">
 
 	import TreeView from './TreeView.svelte';
+	import Filter from './Filter.svelte';
 	import Node from './Node.svelte';
 		import {selectedNode} from './teststore.js'
-	import {treeData, Disney} from './data.js';
-  import { ComponentEvents } from 'svelte';
+	import {treeData, Disney, CharacterFilter, CharacterKind, Universe} from './data.js';
+	import {TVNode, CustomEvent} from './TreeViewTypes';
 	
 
-	class CustomEvent<T> {
-		detail:T;
-		type:string;
-	}
+
+
+	
 
 	let name = 'world';
 	$selectedNode = undefined
@@ -30,14 +30,33 @@
 
 	let selectedNodes : Disney[] = [];
 
-	const onSelectionChanged = (e:CustomEvent<Disney[]>) => {		
-		console.log(e);
+	const onSelectionChanged = (e:CustomEvent<Disney[]>) => {				
 		selectedNodes = e.detail;
+	}
+
+	const characterFilter = (node:Disney, pattern:CharacterFilter) : boolean => {
+
+		if (pattern.kind !== undefined) {
+			if (node.kind != pattern.kind && pattern.kind != CharacterKind.All) {
+				return false;
+			}
+		}
+		if (pattern.universe !== undefined) {
+			if (node.universe != pattern.universe && pattern.universe != Universe.All)	{
+				return false;
+			}			
+		}
+		return true;
 	}
 	
 </script>
 
-<h2>selectable and clickable tree view</h2>
+<h2>simple filter</h2>
+
+
+<TreeView emptyTreeMessage="Mikey Mouse" {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
+
+<h2>Select nodes</h2>
 {#if $selectedNode}
 <b>#{$selectedNode.id} {$selectedNode.name}</b>	
 {/if}
@@ -59,15 +78,19 @@
 	</div>
 </div>
 
-<h2>not selectable, nor clickable</h2>
-
-
-<TreeView emptyTreeMessage="Mikey Mouse" {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
 
 
 
 
-<h2>not selectable, nor clickable but stylish</h2>
+
+<h2>Custom filter</h2>
+
+
+
+<TreeView emptyTreeMessage="Mikey Mouse"  {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId} searchTemplate={Filter} complexFilter={characterFilter}></TreeView>
+
+
+<h2>Styling</h2>
 
 
 
