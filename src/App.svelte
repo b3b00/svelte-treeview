@@ -1,16 +1,19 @@
 <script lang="ts">
 
 	import TreeView from './TreeView.svelte';
+	import Filter from './Filter.svelte';
 	import Node from './Node.svelte';
 		import {selectedNode} from './teststore.js'
-	import {treeData, Disney} from './data.js';
+	import {treeData, Disney, VillainFilter} from './data.js';
   import { ComponentEvents } from 'svelte';
 	
 
-	class CustomEvent<T> {
+	class CustomEvent<T> extends Event{
 		detail:T;
 		type:string;
 	}
+
+	
 
 	let name = 'world';
 	$selectedNode = undefined
@@ -33,6 +36,11 @@
 	const onSelectionChanged = (e:CustomEvent<Disney[]>) => {		
 		console.log(e);
 		selectedNodes = e.detail;
+	}
+
+	const villainFilter = (node:Disney, pattern:VillainFilter) : boolean => {
+		console.log(`filtering with name like >${pattern.name}> is Villain ? >${pattern.villain}<`);
+		return true;
 	}
 	
 </script>
@@ -91,5 +99,6 @@
   
 </style>
 
+<TreeView emptyTreeMessage="Mikey Mouse"  {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId} searchTemplate={Filter} complexFilter={villainFilter}></TreeView>
 
-<TreeView emptyTreeMessage="Mikey Mouse" ref="withStyle" {root} {childrenAccessor} nodeTemplate={Node} {filter} {nodeId}></TreeView>
+
