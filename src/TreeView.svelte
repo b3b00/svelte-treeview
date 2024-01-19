@@ -1,20 +1,17 @@
-<script lang="ts" generics="T,S = string">
+<script lang="ts" generics="T extends TVNode,S = string">
 
     import {onMount} from "svelte";
 	import {setContext} from 'svelte';
 	import TreeViewNode from "./TreeViewNode.svelte";	
 	import { createEventDispatcher } from 'svelte';
+	import {CustomEvent, TVNode} from './TreeViewTypes';
 
 
-	class CustomEvent<T> extends Event{
-		detail:T;
-		type:string;
-	}
-	
+
 	const dispatch = createEventDispatcher<{ "selectionChanged": T[] }>();
   
 
-    export let root:T = undefined;
+    export let root:T & TVNode = undefined;
     
     export let nodeTemplate;
 
@@ -22,9 +19,9 @@
 
     export let childrenAccessor:(n:T) => T[];
     
-    export let filter : (n:T, pattern:string)=> boolean;
+    export let filter : (n:T & TVNode, pattern:string)=> boolean;
 
-	export let nodeId:(n:T) => any;
+	export let nodeId:(n:T & TVNode) => any;
 
 	export let selectable : boolean = false;
 
@@ -75,26 +72,27 @@
 		}
 	}  
 
-	let complexNodefilter = (node:T, search:S) => {
-		if (search === undefined || search === null || search == '') {
+	let complexNodefilter = (node:T , searchPattern:S) => {		
+		if (searchPattern === undefined || searchPattern === null || searchPattern == '') {				
 			return node;
 		}
-		var children = childrenAccessor(node);
+		var children = node.children;
 		if (children.length > 0) {
-			var filtered = children.map(x => nodefilter(x, search)).filter(x => x!= null);
-			if ( complexFilter(node,search)) {
+
+			var filtered = children.map(x => complexNodefilter(x as T, searchPattern)).filter(x => x!= null);
+			if ( complexFilter(node,searchPattern)) {				
 				return node;
 			}
 			else if (filtered.length > 0) {
-				return {name:node.name,
-							 id:node.id,
-							 children:filtered 
-							 };
+				
+				let newNode = Object.assign({}, node);
+				newNode.children = filtered;				
+				return newNode;
 			}
 			return null;
 		}
 		else {
-			if (complexFilter(node,search)) {
+			if (complexFilter(node,searchPattern)) {				
 				return node;
 			}
 			return null;
@@ -102,7 +100,7 @@
 	}  
 
 	let onComplexFilterChanged = (e:CustomEvent<S>) => {
-		currentRoot = complexFilter(root,e.detail);
+		currentRoot = complexNodefilter(root,e.detail);
 	}
 
 	let getNodeSelection = () => selection;
@@ -124,9 +122,8 @@
     $:{        
         search = search;
 		
-        if (filter) {			
-            currentRoot = nodefilter(root, search);
-			console.log(currentRoot);
+        if (filter && search) {			
+            currentRoot = nodefilter(root, search);						
         }        
     }
 

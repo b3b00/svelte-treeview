@@ -5,13 +5,10 @@
 	import Node from './Node.svelte';
 		import {selectedNode} from './teststore.js'
 	import {treeData, Disney, VillainFilter} from './data.js';
-  import { ComponentEvents } from 'svelte';
+	import {TVNode, CustomEvent} from './TreeViewTypes';
 	
 
-	class CustomEvent<T> extends Event{
-		detail:T;
-		type:string;
-	}
+
 
 	
 
@@ -33,13 +30,19 @@
 
 	let selectedNodes : Disney[] = [];
 
-	const onSelectionChanged = (e:CustomEvent<Disney[]>) => {		
-		console.log(e);
+	const onSelectionChanged = (e:CustomEvent<Disney[]>) => {				
 		selectedNodes = e.detail;
 	}
 
 	const villainFilter = (node:Disney, pattern:VillainFilter) : boolean => {
-		console.log(`filtering with name like >${pattern.name}> is Villain ? >${pattern.villain}<`);
+		if (pattern.villain !== undefined) {
+			if (node.vilain != pattern.villain) {
+				return false;
+			}
+		}
+		if (pattern.name !== undefined && pattern.name !== null && pattern.name.length > 0) {
+			return node.name.includes(pattern.name);
+		}
 		return true;
 	}
 	

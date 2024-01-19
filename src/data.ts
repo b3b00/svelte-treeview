@@ -1,4 +1,7 @@
-export class Disney {
+
+import { TVNode } from "./TreeViewTypes";
+
+export class Disney implements TVNode {
   id: number;
   name: string;
   children: Disney[];
@@ -30,6 +33,12 @@ export const treeData: Disney = {
           children: [],
           vilain: true,
         },
+        {
+          id: 666,
+          name: "palpatine",
+          children: [],
+          vilain: true,
+        },
       ],
     },
     {
@@ -51,6 +60,12 @@ export const treeData: Disney = {
         {
           id: 7,
           name: "venom",
+          children: [],
+          vilain: true,
+        },
+        {
+          id: 777,
+          name: "Thanos",
           children: [],
           vilain: true,
         },
