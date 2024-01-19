@@ -3,6 +3,7 @@
 	import TreeView from './TreeView.svelte';
 	import Filter from './Filter.svelte';
 	import Node from './Node.svelte';
+	import Node2 from './Node2.svelte';
 		import {selectedNode} from './teststore.js'
 	import {treeData, Disney, CharacterFilter, CharacterKind, Universe} from './data.js';
 	import {TVNode, CustomEvent} from './TreeViewTypes';
@@ -51,17 +52,17 @@
 
 <h2>simple filter</h2>
 
-
+{#if $selectedNode}
+<b style="display:block">#{$selectedNode.id} {$selectedNode.name}</b>	
+{/if}
 <TreeView emptyTreeMessage="Mickey Mouse" {root}  nodeTemplate={Node} {filter} ></TreeView>
 
 <h2>Select nodes</h2>
-{#if $selectedNode}
-<b>#{$selectedNode.id} {$selectedNode.name}</b>	
-{/if}
+
 
 <div style="display:flex;flex-direction:row">
 	<div>
-	<TreeView emptyTreeMessage="no super hero to show" on:selectionChanged={onSelectionChanged} selectable {root} nodeTemplate={Node} {filter} ></TreeView>
+	<TreeView emptyTreeMessage="no super hero to show" on:selectionChanged={onSelectionChanged} selectable {root} nodeTemplate={Node2} {filter} ></TreeView>
 	</div>
 	<div>
 		{#if selectedNodes && selectedNodes.length > 0}
@@ -85,7 +86,7 @@
 
 
 
-<TreeView emptyTreeMessage="Mikey Mouse"  {root} nodeTemplate={Node} searchTemplate={Filter} complexFilter={characterFilter}></TreeView>
+<TreeView emptyTreeMessage="Mikey Mouse"  {root} nodeTemplate={Node2} searchTemplate={Filter} complexFilter={characterFilter}></TreeView>
 
 
 <h2>Styling</h2>
@@ -95,26 +96,53 @@
 	<style>
 
 
-:global(summary[ref="withStyle"]) {
+:global(summary[ref="style1"]) {
   display: block;
 }
 
-:global(.tv-node[ref="withStyle"]::before) {
+:global(.tv-node[ref="style1"]::before) {
   margin-left: 1ch;
   display: inline-block;
   content: '➕';
   transition: 0.2s;
 }
-:global(details[ref="withStyle"][open] > .tv-node::before) {  
+:global(details[ref="style1"][open] > .tv-node::before) {  
   content: '➖';
   transition: 0.2s;
 }
-:global(.tv-leaf[ref="withStyle"]::before) {
+:global(.tv-leaf[ref="style1"]::before) {
 		content: '🦸🏻‍♂️'
 	}
+
+
+/**
+second treeview style
+*/	
   
+
+:global(summary[ref="style2"]) {
+  display: block;
+}
+
+:global(.tv-node[ref="style2"]::before) {
+  margin-left: 1ch;
+  display: inline-block;
+  content: '✈️';
+  transition: 0.2s;
+}
+:global(details[ref="style2"][open] > .tv-node::before) {  
+  content: '🛶';
+  transition: 0.2s;
+}
+:global(.tv-leaf[ref="style2"]::before) {
+		content: '🐧'
+	}
   
 </style>
 
+<div style="display:flex;flex-direction:row">
 
-<TreeView emptyTreeMessage="Mikey Mouse" ref="withStyle" {root} nodeTemplate={Node} {filter} ></TreeView>
+<TreeView emptyTreeMessage="Mikey Mouse" ref="style1" {root} nodeTemplate={Node2} {filter} ></TreeView>
+<TreeView emptyTreeMessage="Mikey Mouse" ref="style2" {root} nodeTemplate={Node2} {filter} ></TreeView>
+
+</div>

@@ -137,7 +137,7 @@
 	}
 
 </script>
-
+<div style="display:flex;flex-direction:column">
 {#if filter && !complexFilter}
 	<input type="text" bind:value={search}/>
 {/if}
@@ -154,3 +154,4 @@
 	<span style="font-style:italic;display:block">empty</span>
 	{/if}
 {/if}
+</div>
