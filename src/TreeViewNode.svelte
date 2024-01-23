@@ -29,13 +29,13 @@
     
     onMount(async () => {        		
         child = node.children;        
-        isNode = child && Array.isArray(child) && child.length > 0;    
+        isNode = child !== undefined && child !== null && Array.isArray(child) && child.length > 0;    
 	});  
 	
 	
 	const getAllChildren = (n:T): T[] => {
 		let children = n.children;
-		let isnode = children && Array.isArray(children) && children.length > 0; 
+		let isnode = children !== undefined && children !== null && Array.isArray(children) && children.length > 0; 
 		if (isnode) {				
 			const subs = children.map(getAllChildren).reduce(function(a, b){ return a.concat(b); }, [n]);
 			return subs;
@@ -62,7 +62,7 @@
 
 </script>
 
-{#if isNode}
+{#if node.children !== null && node.children !== undefined && node.children.length > 0}
     <details ref={ref} open class="treemargin" style="text-align: left">
         <summary class="tv-node" ref={ref}>					
 					{#if selectable}

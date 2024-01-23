@@ -47,7 +47,7 @@
 			return node;
 		}
 		var children = node.children;
-		if (children.length > 0) {
+		if (children !== null && children !== undefined && children.length > 0) {
 			var filtered = children.map(x => nodefilter(x as T, search)).filter(x => x!= null);
 			if ( filter(node,search)) {
 				return node;
@@ -126,7 +126,7 @@
 
 	const getAllChildren = (n:T):T[] => {
 		let children = n.children;
-		let isnode = children && Array.isArray(children) && children.length > 0; 
+		let isnode = children && Array.isArray(children) && children !== null && children !== undefined && children.length > 0; 
 		if (isnode) {				
 			const subs = children.map(getAllChildren).reduce(function(a, b){ return a.concat(b); }, [n]);
 			return subs;
