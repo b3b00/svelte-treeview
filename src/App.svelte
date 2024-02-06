@@ -55,7 +55,7 @@
 {#if $selectedNode}
 <b style="display:block">#{$selectedNode.id} {$selectedNode.name}</b>	
 {/if}
-<TreeView emptyTreeMessage="Mickey Mouse" {root}  nodeTemplate={Node} {filter} ></TreeView>
+<TreeView emptyTreeMessage="Mickey Mouse" {root}  nodeTemplate={Node} {filter} searchPlaceholder="search the tree..."></TreeView>
 
 <h2>Select nodes</h2>
 

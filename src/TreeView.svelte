@@ -19,6 +19,8 @@
     
     export let filter : (n:T & TVNode, pattern:string)=> boolean = undefined;
 
+	export let searchPlaceholder = "";
+
 	export let selectable : boolean = false;
 
 	export let emptyTreeMessage : string;
@@ -139,7 +141,7 @@
 </script>
 <div style="display:flex;flex-direction:column">
 {#if filter && !complexFilter}
-	<input type="text" bind:value={search}/>
+	<input type="text" bind:value={search} placeholder="{searchPlaceholder}"/>
 {/if}
 {#if complexFilter}
 	<svelte:component this={searchTemplate} on:filterChanged={onComplexFilterChanged}/>
