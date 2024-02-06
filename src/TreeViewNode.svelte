@@ -71,7 +71,7 @@
             <svelte:component this={nodeTemplate} data={node}/>
         </summary>
 
-        {#each node.children as subNode}
+        {#each node.children as subNode (subNode.id)}
             <svelte:self {ref} selected={isNodeSelected(subNode)} {selectable} node={subNode} {nodeTemplate}/>
         {/each}
 
